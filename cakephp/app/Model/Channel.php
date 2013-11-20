@@ -19,15 +19,27 @@ class Channel extends AppModel {
 		'description' => array(
 			'rule' => 'notEmpty'
 		),
-		'sensorID' => array(
+		'sensor' => array(
 			'rule1' => array(
 				'rule' => 'decimal'
 				),
 			'rule2' => array(
 				'rule'    => 'isUnique',
-        		'message' => 'This sensorID is already in use'
+        		'message' => 'This sensor is already in use'
 				)
 		)
+	);
+
+
+	// Link to Points
+	public $hasMany = array(
+	    'LastPoints' => array(
+	        'className' => 'Point',
+	        'foreignKey' => 'channel_id',
+	        'order' => 'LastPoints.date DESC',
+	        'limit' => '5', // Load only lasts point
+	        'dependent' => true
+	    )
 	);
 
 	

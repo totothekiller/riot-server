@@ -22,7 +22,18 @@ Structure de la table `channels`
       `name` varchar(50) NOT NULL,
       `description` text NOT NULL,
       `unit` varchar(15) NOT NULL,
-      `sensorID` int(10) unsigned NOT NULL,
+      `sensor` int(10) unsigned NOT NULL,
      PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+
+Structure de la table `points`
+
+    CREATE TABLE IF NOT EXISTS `points` (
+      `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+      `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      `value` float NOT NULL,
+      `channel_id` int(11) NOT NULL,
+      PRIMARY KEY (`id`),
+      KEY `channel_id` (`channel_id`)
+    ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
