@@ -37,3 +37,18 @@ Structure de la table `points`
       PRIMARY KEY (`id`),
       KEY `channel_id` (`channel_id`)
     ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+Usage
+-------------------------
+
+To add point use this GET request :
+
+
+    http://www.example.com/points/add/{sensorID}/{sensorValue}
+
+Example :
+
+Add point from sensor '42' with value '23.05'
+
+    http://www.example.com/points/add/42/23.05

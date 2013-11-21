@@ -32,25 +32,21 @@ public function view($id = null) {
 
 
 /*
- * Add a new point with POST request
+ * Add a new point with GET Request : Points/add/{sensorID}/{sensorValue}
  */
-public function add() {
+public function add($sensorID=null, $sensorValue=null) {
 
 	// Get Sensor ID
-	if(empty($this->request->query['sensorID']))
+	if(!$sensorID)
 	{
 		throw new NotFoundException(__('No Sensor ID Defined'));
 	}
-	$sensorID = $this->request->query['sensorID'];
 
 	// Get Value
-	if(empty($this->request->query['value']))
+	if(!$sensorValue)
 	{
 		throw new NotFoundException(__('There is no sensor value'));
 	}
-
-	$sensorValue = $this->request->query['value'];
-
 
 	// Find Channel
 	$channel = $this->Channel->findBySensor($sensorID);
@@ -60,8 +56,6 @@ public function add() {
 		throw new NotFoundException(__('Channel ID is not found'));
 	}
 
-
-	debug($channel);
 
     // Init new Point
 	$this->Point->create();
