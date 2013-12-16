@@ -8,7 +8,8 @@
 class ChannelsController extends Controller {
 
     public $helpers = array('Html', 'Form','Session');
-    public $components = array('Session');
+    public $components = array('Session','RequestHandler');
+    public $uses = array('Point','Channel');
 
 /**
  * Default landing page
@@ -33,6 +34,24 @@ public function view($id = null) {
     
     if (!$channel) {
         throw new NotFoundException(__('Invalid Channel'));
+    }
+
+    //debug($this->request);
+
+    // Check Extension
+    if($this->request['ext']=='txt')
+    {
+        $points = $this->Point->find('all', 
+                array(
+                    //tableau de conditions
+                    'conditions' => array('Point.channel_id' =>  $id),
+                    'order' => array('Point.date DESC'),
+                    'limit' => 5000, //Nbr of points
+        ) );
+
+
+        // TXT
+        $this->set('points', $points);
     }
 
     $this->set('channel', $channel);

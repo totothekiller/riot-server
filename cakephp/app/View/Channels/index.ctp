@@ -1,5 +1,8 @@
 <!-- File: /app/View/Channels/index.ctp -->
-
+<?php
+    // Add BreadCrumb
+    $this->Html->addCrumb('Channels', '/Channels');
+?>
 <h1>List of Channels</h1>
 <table>
     <tr>

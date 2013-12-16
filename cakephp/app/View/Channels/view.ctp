@@ -1,6 +1,12 @@
 <!-- File: /app/View/Channels/view.ctp -->
+<?php 
+	// Insert Library Graph
+	$this->Html->script('dygraph-combined', array('inline' => false));
 
-<h1>Name :<?php echo h($channel['Channel']['name']); ?></h1>
+	// Add BreadCrumb
+	$this->Html->addCrumb('Channels', '/Channels');
+?>
+<h3>Name : <?php echo h($channel['Channel']['name']); ?></h3>
 
 <p><small><?php echo $channel['Channel']['description']; ?></small></p>
 
@@ -25,3 +31,32 @@
 
 </table>
 
+<p>Graph : </p>
+
+<div id="graphdiv" style="width:90%; height:500px;"></div>
+
+<script type="text/javascript">
+  g = new Dygraph(
+
+    // containing div
+    document.getElementById("graphdiv"),
+
+    // CSV Data
+    "<?php echo $this->Html->url(array(
+	    "controller" => "Channels",
+	    "action" => "view",
+	    "ext" => "txt",
+	    $channel['Channel']['id']
+	)); ?>",
+
+	// Options
+	{
+		animatedZooms: true,
+
+		labelsDivWidth: 300
+
+
+	}
+
+  );
+</script>
