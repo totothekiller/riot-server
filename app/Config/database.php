@@ -68,7 +68,7 @@ class DATABASE_CONFIG {
 		'login' => 'cakePhp',
 		'password' => 'cakePhp',
 		'database' => 'riot_db',
-		'prefix' => '',
+		'prefix' => 'riot_',
 		'encoding' => 'utf8',
 	);
 }

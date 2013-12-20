@@ -14,10 +14,10 @@ MYSQL Installation
     GRANT ALL PRIVILEGES ON riot_db.* To 'cakePhp'@'localhost' WITH GRANT OPTION;
 
 
-Structure de la table `channels`
+Structure de la table `riot_channels`
 
 
-    CREATE TABLE IF NOT EXISTS `channels` (
+    CREATE TABLE IF NOT EXISTS `riot_channels` (
       `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
       `name` varchar(50) NOT NULL,
       `description` text NOT NULL,
@@ -27,9 +27,9 @@ Structure de la table `channels`
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
-Structure de la table `points`
+Structure de la table `riot_points`
 
-    CREATE TABLE IF NOT EXISTS `points` (
+    CREATE TABLE IF NOT EXISTS `riot_points` (
       `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
       `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
       `value` float NOT NULL,
