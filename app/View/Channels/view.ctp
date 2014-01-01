@@ -44,7 +44,7 @@
     // CSV Data
     "<?php echo $this->Html->url(array(
 	    "controller" => "Channels",
-	    "action" => "view",
+	    "action" => "data",
 	    "ext" => "txt",
 	    $channel['Channel']['id']
 	)); ?>",

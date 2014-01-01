@@ -38,6 +38,25 @@ public function view($id = null) {
 
     //debug($this->request);
 
+    $this->set('channel', $channel);
+}
+
+
+/*
+ * Extract Raw Data in TXT format
+ */
+public function data($id = null)
+{
+    if (!$id) {
+        throw new NotFoundException(__('Invalid Channel'));
+    }
+
+    $channel = $this->Channel->findById($id);
+    
+    if (!$channel) {
+        throw new NotFoundException(__('Invalid Channel'));
+    }
+
     // Check Extension
     if($this->request['ext']=='txt')
     {
@@ -53,10 +72,11 @@ public function view($id = null) {
         // TXT
         $this->set('points', $points);
     }
-
-    $this->set('channel', $channel);
+    else
+    {
+        throw new NotFoundException(__('Invalid Extension'));
+    }
 }
-
 
 
 /*
