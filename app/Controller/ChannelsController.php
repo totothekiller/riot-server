@@ -45,37 +45,57 @@ public function view($id = null) {
 /*
  * Extract Raw Data in TXT format
  */
-public function data($id = null)
+public function data($id1 = null, $id2 = null)
 {
-    if (!$id) {
-        throw new NotFoundException(__('Invalid Channel'));
-    }
-
-    $channel = $this->Channel->findById($id);
-    
-    if (!$channel) {
-        throw new NotFoundException(__('Invalid Channel'));
-    }
-
-    // Check Extension
-    if($this->request['ext']=='txt')
-    {
-        $points = $this->Point->find('all', 
-                array(
-                    //tableau de conditions
-                    'conditions' => array('Point.channel_id' =>  $id),
-                    'order' => array('Point.date DESC'),
-                    'limit' => 5000, //Nbr of points
-        ) );
-
-
-        // TXT
-        $this->set('points', $points);
-    }
-    else
+    // Check extension
+    if($this->request['ext'] != 'txt')
     {
         throw new NotFoundException(__('Invalid Extension'));
     }
+
+    // Check Channel ID 1
+    if (!$id1) {
+        throw new NotFoundException(__('Invalid Channel 1'));
+    }
+
+    $channel1 = $this->Channel->findById($id1);
+    
+    if (!$channel1) {
+        throw new NotFoundException(__('Invalid Channel 1'));
+    }
+
+    // Check Channel ID2
+    $channel2 = $this->Channel->findById($id2);
+
+    if($channel2)
+    {
+        // Dual Channel
+        $points = $this->Point->find('all', 
+                array(
+                    //tableau de conditions
+                    'conditions' => array('Point.channel_id' =>  array($id1, $id2)),
+                    'order' => array('Point.date DESC'),
+                    'limit' => 10000, //Nbr of points
+        ));
+
+        // Send data to View
+        $this->set('id2', $id2);
+    }
+    else
+    {
+        // Single Channel
+        $points = $this->Point->find('all', 
+                array(
+                    //tableau de conditions
+                    'conditions' => array('Point.channel_id' =>  $id1),
+                    'order' => array('Point.date DESC'),
+                    'limit' => 5000, //Nbr of points
+        ));
+    }
+
+    // Send data to View
+    $this->set('id1', $id1);
+    $this->set('points', $points);
 }
 
 
@@ -101,9 +121,41 @@ public function add() {
 }
 
 
+/*
+ * Compare Channels
+ */
+public function compare($id1 = null, $id2 = null)
+{
+    if (!$id1) {
+        throw new NotFoundException(__('Invalid Channel 1'));
+    }
+
+    $channel1 = $this->Channel->findById($id1);
+    
+    if (!$channel1) {
+        throw new NotFoundException(__('Invalid Channel 1'));
+    }
+
+    if (!$id2) {
+        throw new NotFoundException(__('Invalid Channel 2'));
+    }
+
+    if($id1 == $id2)
+    {
+        throw new NotFoundException(__('Please choose different channels'));
+    }
+
+    $channel2 = $this->Channel->findById($id2);
+    
+    if (!$channel2) {
+        throw new NotFoundException(__('Invalid Channel 2'));
+    }
+
+    // Set Data for view
+    $this->set('channel1', $channel1);
+    $this->set('channel2', $channel2);
 
 }
 
 
-
-?>
+} ?>
