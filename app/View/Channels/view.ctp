@@ -3,37 +3,30 @@
 	// Insert Library Graph
 	$this->Html->script('dygraph-combined', array('inline' => false));
 
-	// Add BreadCrumb
-	$this->Html->addCrumb('Channels', '/Channels');
+    // Select Active Menu
+    $this->set('activeMenu', 'channels');
 ?>
-<h3>Name : <?php echo h($channel['Channel']['name']); ?></h3>
 
-<p><small><?php echo $channel['Channel']['description']; ?></small></p>
 
-<p>Sensor ID : <?php echo h($channel['Channel']['sensor']); ?></p>
+<div class="jumbotron">
+		<p><?php echo $channel['Channel']['name']; ?></p>
+		<h1><?php echo $channel['LastPoints'][0]['value']; ?> <?php echo h($channel['Channel']['unit']); ?></h1>
+</div>
 
-<p>Last available points : </p>
+<h4>Graph : </h4>
 
-<table>
-	<tr>
-        <th>Date</th>
-        <th>Value</th>
-    </tr>
+<div id="graphdiv" style="width:100%; height:500px;"></div>
 
-<?php foreach ($channel['LastPoints'] as $point): ?>
+<h4>Information : </h4>
 
-	<tr>
-	    <td><?php echo $point['date']; ?></td>
-	    <td><?php echo $point['value']; ?> <?php echo h($channel['Channel']['unit']); ?></td>
-	</tr>
-
-<?php endforeach; ?>
-
-</table>
-
-<p>Graph : </p>
-
-<div id="graphdiv" style="width:90%; height:500px;"></div>
+<div class="row">
+  <div class="col-md-8">
+  	<p><?php echo $channel['Channel']['description']; ?></p>
+  </div>
+  <div class="col-md-4">
+  	<p>Sensor #<?php echo $channel['Channel']['sensor']; ?></p>
+  </div>
+</div>
 
 <script type="text/javascript">
   g = new Dygraph(

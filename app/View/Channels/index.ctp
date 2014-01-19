@@ -2,15 +2,19 @@
 <?php
     // Add BreadCrumb
     $this->Html->addCrumb('Channels', '/Channels');
-?>
-<h1>List of Channels</h1>
-<table>
-    <tr>
-        <th>Id</th>
-        <th>Title</th>
-        <th>Description</th>
-    </tr>
 
+    // Select Active Menu
+    $this->set('activeMenu', 'channels');
+?>
+<h2>List of Channels</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Description</th>
+        </tr>
+    </thead>
 
     <?php foreach ($channels as $channel): ?>
     <tr>
@@ -25,4 +29,4 @@
     <?php unset($channel); ?>
 </table>
 
-<h1><?php echo $this->Html->link('Add Channel',array('controller' => 'channels', 'action' => 'add')); ?></h1>
+<p><?php echo $this->Html->link('Add Channel',array('controller' => 'channels', 'action' => 'add')); ?></p>

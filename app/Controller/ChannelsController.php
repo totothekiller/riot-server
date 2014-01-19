@@ -7,7 +7,11 @@
  */
 class ChannelsController extends Controller {
 
-    public $helpers = array('Html', 'Form','Session');
+    public $helpers = array(
+        'Session',
+        'Html' => array('className' => 'BoostCake.BoostCakeHtml'),
+        'Form' => array('className' => 'BoostCake.BoostCakeForm')
+    );
     public $components = array('Session','RequestHandler');
     public $uses = array('Point','Channel');
 
@@ -65,21 +69,24 @@ public function data($id1 = null, $id2 = null)
     }
 
     // Check Channel ID2
-    $channel2 = $this->Channel->findById($id2);
-
-    if($channel2)
+    if($id2)
     {
-        // Dual Channel
-        $points = $this->Point->find('all', 
-                array(
-                    //tableau de conditions
-                    'conditions' => array('Point.channel_id' =>  array($id1, $id2)),
-                    'order' => array('Point.date DESC'),
-                    'limit' => 10000, //Nbr of points
-        ));
+        $channel2 = $this->Channel->findById($id2);
 
-        // Send data to View
-        $this->set('id2', $id2);
+        if($channel2)
+        {
+            // Dual Channel
+            $points = $this->Point->find('all', 
+                    array(
+                        //tableau de conditions
+                        'conditions' => array('Point.channel_id' =>  array($id1, $id2)),
+                        'order' => array('Point.date DESC'),
+                        'limit' => 10000, //Nbr of points
+            ));
+
+            // Send data to View
+            $this->set('id2', $id2);
+        }
     }
     else
     {
