@@ -60,7 +60,7 @@ public function add($sensorID=null, $sensorValue=null) {
     // Init new Point
 	$this->Point->create();
 
-	$this->Point->set("date", DboSource::expression('NOW()'));
+	$this->Point->set("date", date('c'));
 	$this->Point->set("value", $sensorValue);
 	$this->Point->set("channel_id", $channel['Channel']['id']);
 
